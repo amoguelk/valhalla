@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}
+  Mis recetas
+{% endblock %}
+<!-- HEADER -->
+{% block header_text %}
+  Mis recetas
+{% endblock %}
+{% block header_right %}
+  <a href="{% url 'home:home' %}" class="link-secondary"><i class="bi bi-house-fill" style="font-size: 1.5rem"></i></a>
+{% endblock %}
+<!-- CONTENT -->
+{% block content %}
+  {% for category in category_list %}
+    <a href="{% url 'recipes:recipe_list' category.id %}" class="text-decoration-none text-body">
+      <div class="card m-2">
+        <div class="card-body">
+          <h4 class="card-title">{{ category.name }}</h4>
+          <p class="text-muted">Elementos: {{ category.count }}</p>
+        </div>
+      </div>
+    </a>
+  {% endfor %}
+  {% if no_category_count > 0 %}
+    <div class="card m-2">
+      <div class="card-body">
+        <h4 class="card-title">Sin categoría</h4>
+        <p class="text-muted">Elementos: {{ no_category_count }}</p>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

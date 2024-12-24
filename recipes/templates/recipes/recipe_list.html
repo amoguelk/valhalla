@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}
+  Mis recetas | {{ category.name }}
+{% endblock %}
+<!-- HEADER -->
+{% block header_left %}
+  <a href="{% url 'recipes:category_list' %}" class="link-secondary"><i class="bi bi-arrow-left" style="font-size: 1.5rem"></i></a>
+{% endblock %}
+{% block header_text %}
+  {{ category.name }}
+{% endblock %}
+{% block header_right %}
+  <a href="{% url 'home:home' %}" class="link-secondary"><i class="bi bi-house-fill" style="font-size: 1.5rem"></i></a>
+{% endblock %}
+<!-- CONTENT -->
+{% block content %}
+  {% for recipe in recipe_list %}
+    <a href="" class="text-decoration-none text-body">
+      <div class="card m-2">
+        <div class="card-body">
+          <h4 class="card-title">{{ recipe.title }}</h4>
+          {% if recipe.ingredients %}
+            <ul>
+              {% for ingredient in recipe.ingredients %}
+                <li>{{ ingredient }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+          {% if recipe.body %}
+            <p>{{ recipe.body }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </a>
+  {% empty %}
+    <p>No hay recetas en esta categoría</p>
+  {% endfor %}
+{% endblock %}

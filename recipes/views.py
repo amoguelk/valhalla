@@ -1,21 +1,40 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.views import View
+from . import models
 
 
-def home(request):
-    return render(
-        request,
-        "recipes/home.html",
-        {
-            "recipes": [
-                {
-                    "title": "Galletas suecas de jengibre",
-                    "ingredients": [
-                        "Lorem ipsum dolor sit amet.",
-                        "Lorem ipsum dolor sit amet.",
-                        "Lorem ipsum dolor sit amet.",
-                    ],
-                    "body": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestias incidunt debitis cumque a ea eum culpa adipisci ex repellendus provident, vero quisquam minus inventore aut? Quisquam porro ratione ipsa, libero harum qui quaerat! Esse quibusdam recusandae inventore in perferendis natus.",
-                }
-            ]
-        },
-    )
+class CategoryListView(View):
+    template_name = "recipes/category_list.html"
+
+    def get(self, request):
+        categories = models.Category.objects.all()
+        return render(
+            request,
+            self.template_name,
+            {
+                "category_list": map(
+                    lambda c: {
+                        "id": c.id,
+                        "name": c.name,
+                        "count": models.Recipe.objects.filter(category=c).count(),
+                    },
+                    categories,
+                ),
+                "no_category_count": models.Recipe.objects.filter(
+                    category=None
+                ).count(),
+            },
+        )
+
+
+class RecipeListView(View):
+    template_name = "recipes/recipe_list.html"
+
+    def get(self, request, pk):
+        category = get_object_or_404(models.Category, id=pk)
+        recipes = models.Recipe.objects.filter(category=category)
+        return render(
+            request,
+            self.template_name,
+            {"category": category, "recipe_list": recipes},
+        )

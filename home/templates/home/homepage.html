@@ -2,7 +2,7 @@
 {% block title %}
   Valhalla
 {% endblock %}
-{% block header %}
+{% block header_text %}
   Bienvenidos
 {% endblock %}
 {% block content %}
@@ -12,7 +12,7 @@
         <div class="col">
           <div class="card text-center">
             <div class="card-body">
-              <div class="card-title">{{ page.name }}</div>
+              <h4 class="card-title">{{ page.name }}</h4>
               <a class="btn btn-primary btn-large" href="{{ page.url }}">Ir</a>
             </div>
           </div>

@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MinLengthValidator
-from django.contrib.postgres.fields import ArrayField
+from django_jsonform.models.fields import ArrayField
 
 """
 Model to store recipe categories ("Desserts", "Soups", etc.)
@@ -22,12 +22,12 @@ class Category(models.Model):
 Model to store recipes
 """
 class Recipe(models.Model):
-    name = models.CharField(
+    title = models.CharField(
         max_length=200,
         validators=[MinLengthValidator(2, "El nombre debe ser de más de dos caracteres")],
     )
-    body = models.TextField()
-    ingredients = ArrayField(base_field=models.CharField(max_length=200))
+    ingredients = ArrayField(base_field=models.CharField(max_length=200), blank=True, null=True)
+    body = models.TextField(blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, null=True)
     
 
