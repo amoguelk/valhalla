@@ -4,7 +4,11 @@
 {% endblock %}
 <!-- HEADER -->
 {% block header_left %}
-  <a href="{% url 'recipes:recipe_list' recipe.category.id %}" class="link-secondary"><i class="bi bi-arrow-left" style="font-size: 1.5rem"></i></a>
+  {% if recipe.category %}
+    <a href="{% url 'recipes:recipe_list' recipe.category.id %}" class="link-secondary"><i class="bi bi-arrow-left" style="font-size: 1.5rem"></i></a>
+  {% else %}
+    <a href="{% url 'recipes:recipe_list_no_category' %}" class="link-secondary"><i class="bi bi-arrow-left" style="font-size: 1.5rem"></i></a>
+  {% endif %}
 {% endblock %}
 {% block header_right %}
   <a href="{% url 'home:home' %}" class="link-secondary"><i class="bi bi-house-fill" style="font-size: 1.5rem"></i></a>
@@ -21,6 +25,16 @@
     {% endif %}
     {% if recipe.body %}
       <p class="text-break">{{ recipe.body|linebreaks }}</p>
+    {% endif %}
+    {% if recipe.related_recipes.all %}
+      <h4>Recetas relacionadas</h4>
+      <ul>
+        {% for related_recipe in recipe.related_recipes.all %}
+          <li>
+            <a href="{% url 'recipes:recipe_detail' related_recipe.id %}">{{ related_recipe.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
     {% endif %}
   </div>
 {% endblock %}

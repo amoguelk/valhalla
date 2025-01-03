@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-  Mis recetas | {{ category.name }}
+  Mis recetas | {{ headerText }}
 {% endblock %}
 <!-- HEADER -->
 {% block header_left %}
@@ -28,7 +28,7 @@
               </ul>
             {% endif %}
             {% if recipe.body %}
-              <p>{{ recipe.body|truncatechars:200|linebreaks }}</p>
+              <p class="text-break">{{ recipe.body|truncatechars:200|linebreaks }}</p>
             {% endif %}
           </div>
         </div>

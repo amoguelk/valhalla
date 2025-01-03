@@ -10,10 +10,14 @@ class Category(models.Model):
         max_length=200,
         validators=[MinLengthValidator(2, "El nombre debe ser de más de dos caracteres")],
     )
+    order = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = "Categoría"
         verbose_name_plural = "Categorías"
+        ordering = ["order"]
 
     def __str__(self):
         return self.name
@@ -29,6 +33,9 @@ class Recipe(models.Model):
     ingredients = ArrayField(base_field=models.CharField(max_length=200), blank=True, null=True)
     body = models.TextField(blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, null=True)
+    related_recipes = models.ManyToManyField('self', related_name="referenced_by", symmetrical=False, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
 
     class Meta:

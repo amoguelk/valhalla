@@ -31,13 +31,25 @@ class CategoryListView(View):
 class RecipeListView(View):
     template_name = "recipes/recipe_list.html"
 
-    def get(self, request, pk):
-        category = get_object_or_404(models.Category, id=pk)
-        recipes = models.Recipe.objects.filter(category=category)
+    def get(self, request, pk=None):
+        if pk:
+            category = get_object_or_404(models.Category, id=pk)
+            return render(
+                request,
+                self.template_name,
+                {
+                    "category": category,
+                    "recipe_list": models.Recipe.objects.filter(category=category),
+                    "headerText": category.name,
+                },
+            )
         return render(
             request,
             self.template_name,
-            {"category": category, "recipe_list": recipes, "headerText": category.name},
+            {
+                "recipe_list": models.Recipe.objects.filter(category=None),
+                "headerText": "Sin categoría",
+            },
         )
 
 
