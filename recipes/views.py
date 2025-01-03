@@ -23,6 +23,7 @@ class CategoryListView(View):
                 "no_category_count": models.Recipe.objects.filter(
                     category=None
                 ).count(),
+                "headerText": "Mis recetas",
             },
         )
 
@@ -36,5 +37,17 @@ class RecipeListView(View):
         return render(
             request,
             self.template_name,
-            {"category": category, "recipe_list": recipes},
+            {"category": category, "recipe_list": recipes, "headerText": category.name},
+        )
+
+
+class RecipeDetailView(View):
+    template_name = "recipes/recipe_detail.html"
+
+    def get(self, request, pk):
+        recipe = get_object_or_404(models.Recipe, id=pk)
+        return render(
+            request,
+            self.template_name,
+            {"recipe": recipe, "headerText": recipe.title},
         )

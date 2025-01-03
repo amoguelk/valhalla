@@ -5,5 +5,8 @@ def home(request):
     return render(
         request,
         "home/homepage.html",
-        {"pages": [{"url": "senshi/", "name": "Mis recetas"}]},
+        {
+            "pages": [{"url": "senshi/", "name": "Mis recetas"}],
+            "headerText": "Bienvenidos",
+        },
     )
