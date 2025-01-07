@@ -1,7 +1,4 @@
-{% extends 'base.html' %}
-{% block title %}
-  Mis recetas | {{ recipe.title }}
-{% endblock %}
+{% extends './recipes_base.html' %}
 <!-- HEADER -->
 {% block header_left %}
   {% if recipe.category %}
@@ -10,31 +7,32 @@
     <a href="{% url 'recipes:recipe_list_no_category' %}" class="link-secondary"><i class="bi bi-arrow-left" style="font-size: 1.5rem"></i></a>
   {% endif %}
 {% endblock %}
-{% block header_right %}
-  <a href="{% url 'home:home' %}" class="link-secondary"><i class="bi bi-house-fill" style="font-size: 1.5rem"></i></a>
+<!-- SUBHEADER -->
+{% block subheader %}
+  <li class="nav-item d-flex justify-content-end">
+    <a href="{% url 'admin:recipes_recipe_change' recipe.id %}" target="_blank" class="nav-link"><i class="bi bi-pencil-fill"></i> Editar receta</a>
+  </li>
 {% endblock %}
 <!-- CONTENT -->
-{% block content %}
-  <div class="container">
-    {% if recipe.ingredients %}
-      <ul>
-        {% for ingredient in recipe.ingredients %}
-          <li>{{ ingredient }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-    {% if recipe.body %}
-      <p class="text-break">{{ recipe.body|linebreaks }}</p>
-    {% endif %}
-    {% if recipe.related_recipes.all %}
-      <h4>Recetas relacionadas</h4>
-      <ul>
-        {% for related_recipe in recipe.related_recipes.all %}
-          <li>
-            <a href="{% url 'recipes:recipe_detail' related_recipe.id %}">{{ related_recipe.title }}</a>
-          </li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  </div>
+{% block recipes_content %}
+  {% if recipe.ingredients %}
+    <ul>
+      {% for ingredient in recipe.ingredients %}
+        <li>{{ ingredient }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% if recipe.body %}
+    <p class="text-break">{{ recipe.body|linebreaks }}</p>
+  {% endif %}
+  {% if recipe.related_recipes.all %}
+    <h4>Recetas relacionadas</h4>
+    <ul>
+      {% for related_recipe in recipe.related_recipes.all %}
+        <li>
+          <a href="{% url 'recipes:recipe_detail' related_recipe.id %}">{{ related_recipe.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 {% endblock %}

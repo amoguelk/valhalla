@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 from django.views import View
 from . import models
 
@@ -43,6 +44,19 @@ class RecipeListView(View):
                     "headerText": category.name,
                 },
             )
+        if request.path == reverse("recipes:search_results"):
+            search_str = request.GET.get("query", "")
+            return render(
+                request,
+                self.template_name,
+                {
+                    "recipe_list": models.Recipe.objects.filter(
+                        title__icontains=search_str
+                    ),
+                    "headerText": "Resultados",
+                    "query": search_str,
+                },
+            )
         return render(
             request,
             self.template_name,
@@ -62,4 +76,26 @@ class RecipeDetailView(View):
             request,
             self.template_name,
             {"recipe": recipe, "headerText": recipe.title},
+        )
+
+
+class PrintView(View):
+    template_name = "recipes/all_recipes.html"
+
+    def get(self, request):
+        categories = models.Category.objects.all()
+        return render(
+            request,
+            self.template_name,
+            {
+                "category_list": map(
+                    lambda c: {
+                        "id": c.id,
+                        "name": c.name,
+                        "recipes": models.Recipe.objects.filter(category=c),
+                    },
+                    categories,
+                ),
+                "no_category_list": models.Recipe.objects.filter(category=None),
+            },
         )
