@@ -148,12 +148,11 @@ JAZZMIN_UI_TWEAKS = {
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": str(os.getenv("DATABASE_ENGINE")),
         "NAME": str(os.getenv("DATABASE_NAME")),
         "USER": str(os.getenv("DATABASE_USER")),
         "PASSWORD": str(os.getenv("DATABASE_PASSWORD")),
         "HOST": str(os.getenv("DATABASE_HOST")),
-        "PORT": str(os.getenv("DATABASE_PORT")),
     }
 }
 
