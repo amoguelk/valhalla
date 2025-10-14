@@ -29,7 +29,7 @@ SECRET_KEY = str(os.getenv("SECRET_KEY"))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.100.26", "valhalla.local"]
+ALLOWED_HOSTS = ["192.168.100.26", "valhalla.local", "127.0.0.1"]
 
 
 # Application definition
@@ -149,11 +149,11 @@ JAZZMIN_UI_TWEAKS = {
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "valhalla_db",
-        "USER": "webadmin",
-        "PASSWORD": "admin123",
-        "HOST": "localhost",
-        "PORT": "",
+        "NAME": str(os.getenv("DATABASE_NAME")),
+        "USER": str(os.getenv("DATABASE_USER")),
+        "PASSWORD": str(os.getenv("DATABASE_PASSWORD")),
+        "HOST": str(os.getenv("DATABASE_HOST")),
+        "PORT": str(os.getenv("DATABASE_PORT")),
     }
 }
 
