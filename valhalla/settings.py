@@ -153,6 +153,7 @@ DATABASES = {
         "USER": str(os.getenv("DATABASE_USER")),
         "PASSWORD": str(os.getenv("DATABASE_PASSWORD")),
         "HOST": str(os.getenv("DATABASE_HOST")),
+        "PORT": str(os.getenv("DATABASE_PORT")),
     }
 }
 

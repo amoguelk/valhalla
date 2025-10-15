@@ -41,10 +41,9 @@ class Recipe(models.Model):
         ],
         verbose_name="Título",
     )
-    ingredients = ArrayField(
-        base_field=models.CharField(max_length=200),
+    ingredients = models.JSONField(
+        default=list,
         blank=True,
-        null=True,
         verbose_name="Ingredientes",
     )
     body = models.TextField(blank=True, null=True, verbose_name="Cuerpo")
@@ -68,7 +67,7 @@ class Recipe(models.Model):
     class Meta:
         verbose_name = "Receta"
         verbose_name_plural = "Recetas"
-        ordering=["title"]
+        ordering = ["title"]
 
     def __str__(self):
         return self.title
