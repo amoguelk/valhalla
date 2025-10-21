@@ -1,6 +1,5 @@
 from django.db import models
 from django.core.validators import MinLengthValidator
-from django_jsonform.models.fields import ArrayField
 
 """
 Model to store recipe categories ("Desserts", "Soups", etc.)
@@ -29,6 +28,31 @@ class Category(models.Model):
 
 
 """
+Model to store ingredients
+"""
+
+
+class Ingredient(models.Model):
+    name = models.CharField(
+        max_length=100,
+        validators=[
+            MinLengthValidator(2, "El nombre debe ser de más de dos caracteres")
+        ],
+        verbose_name="Nombre",
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Nombre"
+        verbose_name_plural = "Nombres"
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
+"""
 Model to store recipes
 """
 
@@ -41,11 +65,7 @@ class Recipe(models.Model):
         ],
         verbose_name="Título",
     )
-    ingredients = models.JSONField(
-        default=list,
-        blank=True,
-        verbose_name="Ingredientes",
-    )
+    ingredients = models.ManyToManyField(Ingredient, through="RecipeIngredient")
     body = models.TextField(blank=True, null=True, verbose_name="Cuerpo")
     category = models.ForeignKey(
         Category,
@@ -71,3 +91,19 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.title
+
+
+"""
+Model to relate recipes to ingredients
+"""
+
+
+class RecipeIngredient(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.PROTECT)
+    main_quantity = models.DecimalField(max_digits=7, decimal_places=3)
+    main_unit = models.CharField(max_length=20)
+    second_quantity = models.DecimalField(
+        max_digits=7, decimal_places=3, blank=True, null=True
+    )
+    second_unit = models.CharField(max_length=20, blank=True)
