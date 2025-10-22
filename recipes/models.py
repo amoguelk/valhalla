@@ -44,8 +44,8 @@ class Ingredient(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = "Nombre"
-        verbose_name_plural = "Nombres"
+        verbose_name = "Ingrediente"
+        verbose_name_plural = "Ingredientes"
         ordering = ["name"]
 
     def __str__(self):
@@ -65,7 +65,9 @@ class Recipe(models.Model):
         ],
         verbose_name="Título",
     )
-    ingredients = models.ManyToManyField(Ingredient, through="RecipeIngredient")
+    ingredients = models.ManyToManyField(
+        Ingredient, through="RecipeIngredient", blank=True
+    )
     body = models.TextField(blank=True, null=True, verbose_name="Cuerpo")
     category = models.ForeignKey(
         Category,

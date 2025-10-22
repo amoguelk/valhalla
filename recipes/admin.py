@@ -18,5 +18,10 @@ class RecipeAdmin(admin.ModelAdmin):
     inlines = [RecipeIngredientInline]
 
 
+class IngredientAdmin(admin.ModelAdmin):
+    readonly_fields = ["created_at", "updated_at"]
+
+
 admin.site.register(models.Category, CategoryAdmin)
 admin.site.register(models.Recipe, RecipeAdmin)
+admin.site.register(models.Ingredient, IngredientAdmin)

@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "bootstrap5",
-    "django_jsonform",
+    "crispy_forms",
+    "crispy_bootstrap5",
     # Apps
     "home",
     "recipes",
@@ -142,6 +143,10 @@ JAZZMIN_UI_TWEAKS = {
     },
 }
 
+# Cripsy
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases

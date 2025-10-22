@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}
-  {% if headerText %}
-    Mis recetas | {{ headerText }}
+  {% if header_text %}
+    Mis recetas | {{ header_text }}
   {% else %}
     Mis recetas
   {% endif %}
@@ -27,7 +27,7 @@
 
           {% endblock %}
           <li class="nav-item d-flex justify-content-end">
-            <a href="{% url 'admin:recipes_recipe_add' %}" target="_blank" class="nav-link"><i class="bi bi-plus-lg"></i> Añadir receta</a>
+            <a href="{% url 'recipes:recipe_add' %}" class="nav-link"><i class="bi bi-plus-lg"></i> Añadir receta</a>
           </li>
           <li class="nav-item d-flex justify-content-end">
             <a href="{% url 'recipes:all_recipes' %}" target="_blank" class="nav-link"><i class="bi bi-file-text"></i> Ver todas las recetas</a>
