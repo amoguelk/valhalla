@@ -22,14 +22,14 @@
       <div class="card m-2">
         <div class="card-body">
           <h4 class="card-title">{{ recipe.title }}</h4>
-          {% if recipe.ingredients %}
+          {% if recipe.ingredients.all %}
             <ul>
-              {% for ingredient in recipe.ingredients|slice:':3' %}
-                <li>{{ ingredient }}</li>
-              {% endfor %}
-              {% if recipe.ingredients|length > 3 %}
-                <li>...</li>
-              {% endif %}
+                {% for ingredient in recipe.recipeingredient_set.all %}
+                    <li>{{ ingredient.ingredient.name }} - {{ ingredient.main_quantity.normalize }} {{ ingredient.main_unit }}{% if ingredient.second_quantity %} ({{ ingredient.second_quantity.normalize }} {{ ingredient.second_unit }}){% endif %}</li>
+                {% endfor %}
+                {% if recipe.ingredients|length > 3 %}
+                    <li>...</li>
+                {% endif %}
             </ul>
           {% endif %}
           {% if recipe.body %}

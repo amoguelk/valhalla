@@ -10,10 +10,10 @@
           <h1 class="display1">{{ category.name }}</h1>
           {% for recipe in category.recipes %}
             <h3 class="display3">{{ recipe.title }}</h3>
-            {% if recipe.ingredients %}
+            {% if recipe.ingredients.all %}
               <ul>
-                {% for ingredient in recipe.ingredients %}
-                  <li>{{ ingredient }}</li>
+                {% for ingredient in recipe.recipeingredient_set.all %}
+                    <li>{{ ingredient.ingredient.name }} - {{ ingredient.main_quantity.normalize }} {{ ingredient.main_unit }}{% if ingredient.second_quantity %} ({{ ingredient.second_quantity.normalize }} {{ ingredient.second_unit }}){% endif %}</li>
                 {% endfor %}
               </ul>
             {% endif %}

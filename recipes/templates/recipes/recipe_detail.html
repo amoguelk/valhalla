@@ -15,10 +15,10 @@
 {% endblock %}
 <!-- CONTENT -->
 {% block recipes_content %}
-  {% if recipe.ingredients %}
+  {% if recipe.ingredients.all %}
     <ul>
-      {% for ingredient in recipe.ingredients %}
-        <li>{{ ingredient }}</li>
+      {% for ingredient in recipe.recipeingredient_set.all %}
+        <li>{{ ingredient.ingredient.name }} - {{ ingredient.main_quantity.normalize }} {{ ingredient.main_unit }}{% if ingredient.second_quantity %} ({{ ingredient.second_quantity.normalize }} {{ ingredient.second_unit }}){% endif %}</li>
       {% endfor %}
     </ul>
   {% endif %}
