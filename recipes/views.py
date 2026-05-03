@@ -105,6 +105,17 @@ class RecipeDetailView(View):
         )
 
 
+class RecipeCreateView(LoginRequiredMixin, CreateView):
+    model = models.Recipe
+    fields = "__all__"
+    success_url = reverse_lazy("recipes:category_list")
+
+    def get_context_data(self, **kwargs):
+        ctx = super(RecipeCreateView, self).get_context_data(**kwargs)
+        ctx["header_text"] = "Añadir receta"
+        return ctx
+
+
 class PrintView(View):
     template_name = "recipes/all_recipes.html"
 

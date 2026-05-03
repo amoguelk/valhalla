@@ -1,0 +1,12 @@
+{% extends './recipes_base.html' %}
+{% load crispy_forms_tags %}
+{% block recipes_content %}
+<p>
+  <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" value="Enviar">
+    <input type="submit" value="Cancelar" onclick="window.location.href='{% url 'recipes:category_list' %}';return false;">
+  </form>
+</p>
+{% endblock %}
