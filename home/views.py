@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls.base import reverse_lazy
 
 
 def home(request):
@@ -7,8 +8,8 @@ def home(request):
         "home/homepage.html",
         {
             "pages": [
-                {"url": "senshi/", "name": "Mis recetas"},
-                {"url": "mithrun/", "name": "Administrar el sitio"},
+                {"url": reverse_lazy("recipes:category_list"), "name": "Mis recetas"},
+                {"url": reverse_lazy("admin:index"), "name": "Administrar el sitio"},
             ],
             "header_text": "Bienvenidos",
         },

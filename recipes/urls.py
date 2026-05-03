@@ -10,6 +10,11 @@ urlpatterns = [
         "category/none/", views.RecipeListView.as_view(), name="recipe_list_no_category"
     ),
     path("category/add/", views.CategoryCreateView.as_view(), name="category_add"),
+    path(
+        "category/edit/<int:pk>/",
+        views.CategoryUpdateView.as_view(),
+        name="category_edit",
+    ),
     path("recipe/<int:pk>/", views.RecipeDetailView.as_view(), name="recipe_detail"),
     path("all/", views.PrintView.as_view(), name="all_recipes"),
     path("search/", views.RecipeListView.as_view(), name="search_results"),
