@@ -1,33 +1,35 @@
-{% extends './recipes_base.html' %}
-{% block title %}
-  Mis recetas
-{% endblock %}
+{% extends './recipes_base.html' %} {% block title %} Mis recetas {% endblock %}
 <!-- SUBHEADER -->
 {% block subheader %}
-  <li class="nav-item d-flex justify-content-end">
-    <a href="{% url 'admin:recipes_category_add' %}" class="nav-link" target="_blank"><i class="bi bi-plus-lg"></i> Añadir categoría</a>
-  </li>
+<li class="nav-item d-flex justify-content-end">
+    <a href="{% url 'recipes:category_add' %}" class="nav-link"
+        ><i class="bi bi-plus-lg"></i> Añadir categoría</a
+    >
+</li>
 {% endblock %}
 <!-- CONTENT -->
-{% block recipes_content %}
-  {% for category in category_list %}
-    <a href="{% url 'recipes:recipe_list' category.id %}" class="text-decoration-none text-body">
-      <div class="card m-2">
+{% block recipes_content %} {% for category in category_list %}
+<a
+    href="{% url 'recipes:recipe_list' category.id %}"
+    class="text-decoration-none text-body"
+>
+    <div class="card m-2">
         <div class="card-body">
-          <h4 class="card-title">{{ category.name }}</h4>
-          <p class="text-muted">Elementos: {{ category.count }}</p>
+            <h4 class="card-title">{{ category.name }}</h4>
+            <p class="text-muted">Elementos: {{ category.count }}</p>
         </div>
-      </div>
-    </a>
-  {% endfor %}
-  {% if no_category_count > 0 %}
-    <a href="{% url 'recipes:recipe_list_no_category' %}" class="text-decoration-none text-body">
-      <div class="card m-2">
+    </div>
+</a>
+{% endfor %} {% if no_category_count > 0 %}
+<a
+    href="{% url 'recipes:recipe_list_no_category' %}"
+    class="text-decoration-none text-body"
+>
+    <div class="card m-2">
         <div class="card-body">
-          <h4 class="card-title">Sin categoría</h4>
-          <p class="text-muted">Elementos: {{ no_category_count }}</p>
+            <h4 class="card-title">Sin categoría</h4>
+            <p class="text-muted">Elementos: {{ no_category_count }}</p>
         </div>
-      </div>
-    </a>
-  {% endif %}
-{% endblock %}
+    </div>
+</a>
+{% endif %} {% endblock %}

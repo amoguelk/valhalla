@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
+from django.urls.base import reverse_lazy
 from django.views import View
+from django.views.generic.edit import CreateView
 
 from . import models
 
@@ -28,6 +30,17 @@ class CategoryListView(View):
                 "header_text": "Mis recetas",
             },
         )
+
+
+class CategoryCreateView(CreateView):
+    model = models.Category
+    fields = "__all__"
+    success_url = reverse_lazy("recipes:category_list")
+
+    def get_context_data(self, **kwargs):
+        ctx = super(CategoryCreateView, self).get_context_data(**kwargs)
+        ctx["header_text"] = "Añadir categoría"
+        return ctx
 
 
 class RecipeListView(View):

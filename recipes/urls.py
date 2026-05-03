@@ -1,4 +1,5 @@
 from django.urls import path
+
 from . import views
 
 app_name = "recipes"
@@ -8,6 +9,7 @@ urlpatterns = [
     path(
         "category/none/", views.RecipeListView.as_view(), name="recipe_list_no_category"
     ),
+    path("category/add/", views.CategoryCreateView.as_view(), name="category_add"),
     path("recipe/<int:pk>/", views.RecipeDetailView.as_view(), name="recipe_detail"),
     path("all/", views.PrintView.as_view(), name="all_recipes"),
     path("search/", views.RecipeListView.as_view(), name="search_results"),
