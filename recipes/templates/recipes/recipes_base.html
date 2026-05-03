@@ -54,6 +54,23 @@
                         recetas</a
                     >
                 </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item d-flex justify-content-end">
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-link nav-link">
+                            <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+                        </button>
+                    </form>
+                </li>
+                {% else %}
+                <li class="nav-item d-flex justify-content-end">
+                    <a href="{% url 'login' %}" class="nav-link"
+                        ><i class="bi bi-box-arrow-in-right"></i> Iniciar
+                        sesión</a
+                    >
+                </li>
+                {% endif %}
             </ul>
         </div>
     </div>

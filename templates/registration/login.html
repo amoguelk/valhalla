@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Iniciar Sesión {% endblock %}
+<!-- CONTENT -->
+{% block content %}
+<p>
+  <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" value="Iniciar Sesión">
+  </form>
+</p>
+{% endblock %}
