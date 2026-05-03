@@ -1,44 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      {% block title %}
-
-      {% endblock %}
-    </title>
-    {% load bootstrap5 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-  </head>
-  <body>
-    <div class="container-fluid">
-      <!-- HEADER -->
-      <div class="container-fluid">
-        <div class="row align-items-center">
-          <div class="col-2 d-flex justify-content-center">
-            {% block header_left %}
-
-            {% endblock %}
-          </div>
-          <div class="col-8">
-            <h1 class="display-1 text-center d-none d-md-block">{{ headerText }}</h1>
-            <!-- Title for small screens -->
-            <h1 class="display-5 text-center d-md-none">{{ headerText }}</h1>
-          </div>
-          <div class="col-2 d-flex justify-content-center">
-            {% block header_right %}
-
-            {% endblock %}
-          </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{% block title %} {% endblock %}</title>
+        {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        />
+    </head>
+    <body>
+        <div class="container-fluid">
+            <!-- HEADER -->
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-2 d-flex justify-content-center">
+                        {% block header_left %} {% endblock %}
+                    </div>
+                    <div class="col-8">
+                        <h1 class="display-1 text-center d-none d-md-block">
+                            {{ header_text }}
+                        </h1>
+                        <!-- Title for small screens -->
+                        <h1 class="display-5 text-center d-md-none">
+                            {{ header_text }}
+                        </h1>
+                    </div>
+                    <div class="col-2 d-flex justify-content-center">
+                        {% block header_right %} {% endblock %}
+                    </div>
+                </div>
+            </div>
+            <!-- CONTENT -->
+            {% block content %} {% endblock %}
         </div>
-      </div>
-      <!-- CONTENT -->
-      {% block content %}
-
-      {% endblock %}
-    </div>
-  </body>
+    </body>
 </html>

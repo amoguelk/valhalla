@@ -10,12 +10,14 @@ def home(request):
                 {"url": "senshi/", "name": "Mis recetas"},
                 {"url": "mithrun/", "name": "Administrar el sitio"},
             ],
-            "headerText": "Bienvenidos",
+            "header_text": "Bienvenidos",
         },
     )
 
+
 def error_404(request, exception):
-    return render(request, 'home/error_404.html', status=404)
+    return render(request, "home/error_404.html", status=404)
+
 
 def error_500(request):
-    return render(request, 'home/error_500.html', status=500)
+    return render(request, "home/error_500.html", status=500)
