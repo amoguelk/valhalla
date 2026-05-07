@@ -11,3 +11,6 @@ djenv/
 
 # Static
 static/
+
+# Editor
+.zed/settings.json

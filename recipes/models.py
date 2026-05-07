@@ -48,14 +48,18 @@ class Recipe(models.Model):
                                 "name": {
                                     "type": "string",
                                     "title": "Nombre del ingrediente",
+                                    "required": True,
                                 },
                                 "main_qty": {
                                     "type": "number",
                                     "title": "Cantidad principal del ingrediente",
+                                    "required": False,
+                                    "exclusiveMinimum": 0.0,
                                 },
                                 "main_unit": {
                                     "type": "string",
                                     "title": "Unidad de la cantidad principal del ingrediente",
+                                    "required": False,
                                 },
                             },
                         },
@@ -65,22 +69,29 @@ class Recipe(models.Model):
                                 "name": {
                                     "type": "string",
                                     "title": "Nombre del ingrediente",
+                                    "required": True,
                                 },
                                 "main_qty": {
                                     "type": "number",
                                     "title": "Cantidad principal del ingrediente",
+                                    "required": False,
+                                    "exclusiveMinimum": 0.0,
                                 },
                                 "main_unit": {
                                     "type": "string",
                                     "title": "Unidad de la cantidad principal del ingrediente",
+                                    "required": False,
                                 },
                                 "secondary_qty": {
                                     "type": "number",
                                     "title": "Cantidad secundaria del ingrediente",
+                                    "required": True,
+                                    "exclusiveMinimum": 0.0,
                                 },
                                 "secondary_unit": {
                                     "type": "string",
                                     "title": "Unidad de la cantidad secundaria del ingrediente",
+                                    "required": False,
                                 },
                             },
                         },
@@ -92,7 +103,6 @@ class Recipe(models.Model):
                 },
             ]
         },
-        "default": [],
         "minItems": 0,
     }
     title = models.CharField(
