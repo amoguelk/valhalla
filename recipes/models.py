@@ -1,6 +1,6 @@
-from django.db import models
 from django.core.validators import MinLengthValidator
-from django_jsonform.models.fields import ArrayField
+from django.db import models
+from django_jsonform.models.fields import JSONField
 
 """
 Model to store recipe categories ("Desserts", "Soups", etc.)
@@ -34,6 +34,77 @@ Model to store recipes
 
 
 class Recipe(models.Model):
+    INGREDIENTS_SCHEMA = {
+        "type": "array",
+        "items": {
+            "oneOf": [
+                {
+                    "type": "object",
+                    "title": "Ingrediente desglosado",
+                    "oneOf": [
+                        {
+                            "title": "Sin unidad secundaria",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "title": "Nombre del ingrediente",
+                                    "required": True,
+                                },
+                                "main_qty": {
+                                    "type": "number",
+                                    "title": "Cantidad principal del ingrediente",
+                                    "required": False,
+                                    "exclusiveMinimum": 0.0,
+                                },
+                                "main_unit": {
+                                    "type": "string",
+                                    "title": "Unidad de la cantidad principal del ingrediente",
+                                    "required": False,
+                                },
+                            },
+                        },
+                        {
+                            "title": "Con unidad secundaria",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "title": "Nombre del ingrediente",
+                                    "required": True,
+                                },
+                                "main_qty": {
+                                    "type": "number",
+                                    "title": "Cantidad principal del ingrediente",
+                                    "required": False,
+                                    "exclusiveMinimum": 0.0,
+                                },
+                                "main_unit": {
+                                    "type": "string",
+                                    "title": "Unidad de la cantidad principal del ingrediente",
+                                    "required": False,
+                                },
+                                "secondary_qty": {
+                                    "type": "number",
+                                    "title": "Cantidad secundaria del ingrediente",
+                                    "required": True,
+                                    "exclusiveMinimum": 0.0,
+                                },
+                                "secondary_unit": {
+                                    "type": "string",
+                                    "title": "Unidad de la cantidad secundaria del ingrediente",
+                                    "required": False,
+                                },
+                            },
+                        },
+                    ],
+                },
+                {
+                    "type": "string",
+                    "title": "(LEGACY) Descripción completa del ingrediente",
+                },
+            ]
+        },
+        "minItems": 0,
+    }
     title = models.CharField(
         max_length=200,
         validators=[
@@ -41,9 +112,11 @@ class Recipe(models.Model):
         ],
         verbose_name="Título",
     )
-    ingredients = models.JSONField(
-        default=list,
+    ingredients = JSONField(
+        schema=INGREDIENTS_SCHEMA,
+        null=True,
         blank=True,
+        default=None,
         verbose_name="Ingredientes",
     )
     body = models.TextField(blank=True, null=True, verbose_name="Cuerpo")

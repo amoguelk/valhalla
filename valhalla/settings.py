@@ -10,8 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
+
 from dotenv import load_dotenv
 
 load_dotenv(".env")
@@ -44,10 +45,16 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "bootstrap5",
     "django_jsonform",
+    "crispy_forms",
+    "crispy_bootstrap5",
     # Apps
     "home",
     "recipes",
 ]
+
+LOGIN_REDIRECT_URL = "home:home"
+LOGOUT_REDIRECT_URL = "home:home"
+LOGIN_URL = "/accounts/login/"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -64,7 +71,7 @@ ROOT_URLCONF = "valhalla.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -141,6 +148,10 @@ JAZZMIN_UI_TWEAKS = {
         "success": "btn-success",
     },
 }
+
+# Crispy
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
 # Database

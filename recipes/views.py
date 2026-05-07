@@ -1,6 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
+from django.urls.base import reverse_lazy
 from django.views import View
+from django.views.generic.edit import CreateView, UpdateView
+
 from . import models
 
 
@@ -24,9 +28,31 @@ class CategoryListView(View):
                 "no_category_count": models.Recipe.objects.filter(
                     category=None
                 ).count(),
-                "headerText": "Mis recetas",
+                "header_text": "Mis recetas",
             },
         )
+
+
+class CategoryCreateView(LoginRequiredMixin, CreateView):
+    model = models.Category
+    fields = "__all__"
+    success_url = reverse_lazy("recipes:category_list")
+
+    def get_context_data(self, **kwargs):
+        ctx = super(CategoryCreateView, self).get_context_data(**kwargs)
+        ctx["header_text"] = "Añadir categoría"
+        return ctx
+
+
+class CategoryUpdateView(LoginRequiredMixin, UpdateView):
+    model = models.Category
+    fields = "__all__"
+    success_url = reverse_lazy("recipes:category_list")
+
+    def get_context_data(self, **kwargs):
+        ctx = super(CategoryUpdateView, self).get_context_data(**kwargs)
+        ctx["header_text"] = "Editar categoría"
+        return ctx
 
 
 class RecipeListView(View):
@@ -41,7 +67,7 @@ class RecipeListView(View):
                 {
                     "category": category,
                     "recipe_list": models.Recipe.objects.filter(category=category),
-                    "headerText": category.name,
+                    "header_text": category.name,
                 },
             )
         if request.path == reverse("recipes:search_results"):
@@ -53,7 +79,7 @@ class RecipeListView(View):
                     "recipe_list": models.Recipe.objects.filter(
                         title__icontains=search_str
                     ),
-                    "headerText": "Resultados",
+                    "header_text": "Resultados",
                     "query": search_str,
                 },
             )
@@ -62,7 +88,7 @@ class RecipeListView(View):
             self.template_name,
             {
                 "recipe_list": models.Recipe.objects.filter(category=None),
-                "headerText": "Sin categoría",
+                "header_text": "Sin categoría",
             },
         )
 
@@ -75,8 +101,19 @@ class RecipeDetailView(View):
         return render(
             request,
             self.template_name,
-            {"recipe": recipe, "headerText": recipe.title},
+            {"recipe": recipe, "header_text": recipe.title},
         )
+
+
+class RecipeCreateView(LoginRequiredMixin, CreateView):
+    model = models.Recipe
+    fields = "__all__"
+    success_url = reverse_lazy("recipes:category_list")
+
+    def get_context_data(self, **kwargs):
+        ctx = super(RecipeCreateView, self).get_context_data(**kwargs)
+        ctx["header_text"] = "Añadir receta"
+        return ctx
 
 
 class PrintView(View):
