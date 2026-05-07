@@ -41,65 +41,39 @@ class Recipe(models.Model):
                 {
                     "type": "object",
                     "title": "Ingrediente desglosado",
-                    "oneOf": [
-                        {
-                            "title": "Sin unidad secundaria",
-                            "properties": {
-                                "name": {
-                                    "type": "string",
-                                    "title": "Nombre del ingrediente",
-                                    "required": True,
-                                },
-                                "main_qty": {
-                                    "type": "number",
-                                    "title": "Cantidad principal del ingrediente",
-                                    "required": False,
-                                    "exclusiveMinimum": 0.0,
-                                },
-                                "main_unit": {
-                                    "type": "string",
-                                    "title": "Unidad de la cantidad principal del ingrediente",
-                                    "required": False,
-                                },
-                            },
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "title": "Nombre",
+                            "required": True,
                         },
-                        {
-                            "title": "Con unidad secundaria",
-                            "properties": {
-                                "name": {
-                                    "type": "string",
-                                    "title": "Nombre del ingrediente",
-                                    "required": True,
-                                },
-                                "main_qty": {
-                                    "type": "number",
-                                    "title": "Cantidad principal del ingrediente",
-                                    "required": False,
-                                    "exclusiveMinimum": 0.0,
-                                },
-                                "main_unit": {
-                                    "type": "string",
-                                    "title": "Unidad de la cantidad principal del ingrediente",
-                                    "required": False,
-                                },
-                                "secondary_qty": {
-                                    "type": "number",
-                                    "title": "Cantidad secundaria del ingrediente",
-                                    "required": True,
-                                    "exclusiveMinimum": 0.0,
-                                },
-                                "secondary_unit": {
-                                    "type": "string",
-                                    "title": "Unidad de la cantidad secundaria del ingrediente",
-                                    "required": False,
-                                },
-                            },
+                        "main_qty": {
+                            "type": "number",
+                            "title": "Cantidad principal",
+                            "required": False,
+                            "exclusiveMinimum": 0.0,
                         },
-                    ],
+                        "main_unit": {
+                            "type": "string",
+                            "title": "Unidad principal",
+                            "required": False,
+                        },
+                        "secondary_qty": {
+                            "type": "number",
+                            "title": "Cantidad secundaria",
+                            "required": False,
+                            "exclusiveMinimum": 0.0,
+                        },
+                        "secondary_unit": {
+                            "type": "string",
+                            "title": "Unidad secundaria",
+                            "required": False,
+                        },
+                    },
                 },
                 {
                     "type": "string",
-                    "title": "(LEGACY) Descripción completa del ingrediente",
+                    "title": "(LEGACY) Descripción completa",
                 },
             ]
         },
