@@ -1,4 +1,5 @@
 {% extends './recipes_base.html' %}
+{% load utils %}
 <!-- HEADER -->
 {% block header_left %}
   <a href="{% url 'recipes:category_list' %}" class="link-secondary"><i class="bi bi-arrow-left" style="font-size: 1.5rem"></i></a>
@@ -25,7 +26,11 @@
           {% if recipe.ingredients %}
             <ul>
               {% for ingredient in recipe.ingredients|slice:':3' %}
+                {% if ingredient|get_type == "<class 'str'>" %}
                 <li>{{ ingredient }}</li>
+                {% else %}
+                <li>{{ ingredient.main_qty }} {{ ingredient.main_unit }} {{ ingredient.name }}{% if ingredient.secondary_qty %} ({{ ingredient.secondary_qty }} {{ ingredient.secondary_unit }}){% endif %}</li>
+                {% endif %}
               {% endfor %}
               {% if recipe.ingredients|length > 3 %}
                 <li>...</li>
