@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load utils %}
 {% block title %}
   Mis recetas
 {% endblock %}
@@ -11,11 +12,15 @@
           {% for recipe in category.recipes %}
             <h3 class="display3">{{ recipe.title }}</h3>
             {% if recipe.ingredients %}
-              <ul>
+                <ul>
                 {% for ingredient in recipe.ingredients %}
-                  <li>{{ ingredient }}</li>
+                    {% if ingredient|get_type == "<class 'str'>" %}
+                    <li>{{ ingredient }}</li>
+                    {% else %}
+                    <li>{{ ingredient.main_qty|to_common_fraction }} {{ ingredient.main_unit }} {{ ingredient.name }}{% if ingredient.secondary_qty %} ({{ ingredient.secondary_qty|to_common_fraction }} {{ ingredient.secondary_unit }}){% endif %}</li>
+                    {% endif %}
                 {% endfor %}
-              </ul>
+                </ul>
             {% endif %}
             {% if recipe.body %}
               <p class="text-break">{{ recipe.body|linebreaks }}</p>
