@@ -41,35 +41,61 @@ class Recipe(models.Model):
                 {
                     "type": "object",
                     "title": "Ingrediente desglosado",
-                    "properties": {
-                        "name": {
-                            "type": "string",
-                            "title": "Nombre",
-                            "required": True,
+                    "oneOf": [
+                        {
+                            "title": "Sin unidad secundaria",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "title": "Nombre",
+                                    "required": True,
+                                },
+                                "main_qty": {
+                                    "type": "number",
+                                    "title": "Cantidad principal",
+                                    "required": False,
+                                    "exclusiveMinimum": 0.0,
+                                },
+                                "main_unit": {
+                                    "type": "string",
+                                    "title": "Unidad principal",
+                                    "required": False,
+                                },
+                            },
                         },
-                        "main_qty": {
-                            "type": "number",
-                            "title": "Cantidad principal",
-                            "required": False,
-                            "exclusiveMinimum": 0.0,
+                        {
+                            "title": "Con unidad secundaria",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "title": "Nombre",
+                                    "required": True,
+                                },
+                                "main_qty": {
+                                    "type": "number",
+                                    "title": "Cantidad principal",
+                                    "required": False,
+                                    "exclusiveMinimum": 0.0,
+                                },
+                                "main_unit": {
+                                    "type": "string",
+                                    "title": "Unidad principal",
+                                    "required": False,
+                                },
+                                "secondary_qty": {
+                                    "type": "number",
+                                    "title": "Cantidad secundaria",
+                                    "required": True,
+                                    "exclusiveMinimum": 0.0,
+                                },
+                                "secondary_unit": {
+                                    "type": "string",
+                                    "title": "Unidad secundaria",
+                                    "required": False,
+                                },
+                            },
                         },
-                        "main_unit": {
-                            "type": "string",
-                            "title": "Unidad principal",
-                            "required": False,
-                        },
-                        "secondary_qty": {
-                            "type": "number",
-                            "title": "Cantidad secundaria",
-                            "required": False,
-                            "exclusiveMinimum": 0.0,
-                        },
-                        "secondary_unit": {
-                            "type": "string",
-                            "title": "Unidad secundaria",
-                            "required": False,
-                        },
-                    },
+                    ],
                 },
                 {
                     "type": "string",

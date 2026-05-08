@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.urls.base import reverse_lazy
 from django.views import View
@@ -97,11 +97,31 @@ class RecipeDetailView(View):
     template_name = "recipes/recipe_detail.html"
 
     def get(self, request, pk):
+        try:
+            multiply = float(request.GET.get("multiplier", 1))
+        except ValueError:
+            return redirect("recipes:recipe_detail", pk=pk)
+        if (
+            multiply < 0.5
+            or multiply > 10
+            or not (multiply % 1 == 0.5 or multiply % 1 == 0)
+        ):
+            return redirect("recipes:recipe_detail", pk=pk)
         recipe = get_object_or_404(models.Recipe, id=pk)
+
+        if multiply != 1 and recipe.ingredients:
+            for ingredient in recipe.ingredients:
+                if type(ingredient) is dict:
+                    ingredient["main_qty"] = round(ingredient["main_qty"] * multiply, 3)
+                    if "secondary_qty" in ingredient:
+                        ingredient["secondary_qty"] = round(
+                            ingredient["secondary_qty"] * multiply, 3
+                        )
+
         return render(
             request,
             self.template_name,
-            {"recipe": recipe, "header_text": recipe.title},
+            {"recipe": recipe, "header_text": recipe.title, "multiply": multiply},
         )
 
 

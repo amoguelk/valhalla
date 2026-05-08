@@ -16,6 +16,20 @@
 {% endblock %}
 <!-- CONTENT -->
 {% block recipes_content %}
+  <form action="{% url 'recipes:recipe_detail' pk=recipe.id %}" method="get">
+    <div class="mb-3 d-flex flex-column justify-content-end">
+      <div class="d-flex justify-content-end align-items-center">
+        <label for="multiplier" class="form-label pe-2">Raciones</label>
+        <input type="number" class="form-control w-auto" id="multiplier" name="multiplier" min="0.5" max="10" step="0.5" value="{{multiply}}" aria-describedby="multiplier-help">
+        <button type="submit" class="btn btn-secondary">
+          <i class="bi bi-check" aria-label="Confirmar"></i>
+        </button>
+      </div>
+      <div id="multiplier-help" class="form-text text-end">
+        Sólo funciona para ingredientes desglosados
+      </div>
+    </div>
+  </form>
   {% if recipe.ingredients %}
     <ul>
       {% for ingredient in recipe.ingredients %}
